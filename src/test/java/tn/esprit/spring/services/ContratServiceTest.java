@@ -38,4 +38,13 @@ public class ContratServiceTest {
 	}
 	
 	
+	@Test
+	public void testRetrieveAllContrat() {
+		List<Contrat> listcontrats = ser.getAllContrats();
+		Assert.assertEquals(listcontrats.size(), listcontrats.size());
+	}
+	
+	
+	
+	
 }
