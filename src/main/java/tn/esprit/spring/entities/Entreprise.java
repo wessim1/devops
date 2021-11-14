@@ -84,6 +84,10 @@ public class Entreprise implements Serializable{
 	}
 
 
-
+	public Entreprise(int id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
 
 }
