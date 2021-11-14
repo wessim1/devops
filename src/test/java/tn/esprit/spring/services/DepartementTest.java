@@ -28,5 +28,19 @@ public class DepartementTest {
 	}
 
 
+	@Test
+	public void testdeleteDepartementById() {
+		Departement dep = new Departement("Info");
+		int id = serviceEntreprise.ajouterDepartement(dep);
+		
+		int value = serviceEntreprise.deleteDepartementById(id);
+		Assert.assertEquals(1, value);
+		
+		int WrongValue = serviceEntreprise.deleteDepartementById(1812132);
+		Assert.assertEquals(WrongValue, -1);
+
+	}
+
+
 	
 }
