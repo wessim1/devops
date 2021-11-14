@@ -30,11 +30,14 @@ public class EmployeServiceImplTest {
 		
 	}
 	
-	@Test
-	public void testdeleteDepartementById() {
-		Assert.assertNotNull(es.getNombreEmployeJPQL());
-	}
 	
+	@Test
+	public void testAddContrat() {
+		Contrat c = new Contrat(new Date(),"typeContract",3000);
+		int ref = es.ajouterContrat(c);
+		Assert.assertNotNull(ref);
+		
+	}
 	
 	
 	
