@@ -1,7 +1,7 @@
 pipeline{
 
 	environment{
-		registry = 'achraf14/devopsimage'
+		registry = 'daghbari1/devopsimage'
 		registryCredential= 'dockerHub'
 		dockerImage = ''
 	}
