@@ -44,6 +44,23 @@ public class ContratServiceTest {
 		Assert.assertEquals(listcontrats.size(), listcontrats.size());
 	}
 	
+	@Test
+	public void testModifyContrat() throws ParseException   {
+		java.util.Date date=new java.util.Date();
+		java.sql.Date sqlDate=new java.sql.Date(date.getTime());
+		Contrat con = new Contrat(2,date ,"test",15);
+		Contrat contratModified = ser.updateContrat(con);
+		Assert.assertEquals(con.getTypeContrat(), contratModified.getTypeContrat());
+	}
+	
+	@Test
+	public void testDeleteContrat() {
+		ser.remove("4");
+		Assert.assertNull(ser.retrieveContrat("4"));
+		
+		
+	}
+	
 	
 	
 	
