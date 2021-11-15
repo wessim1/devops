@@ -38,5 +38,11 @@ public class EmployeServiceImplTest {
 		
 	}
 	
+	
+	@Test
+	public void testdeleteDepartementById() {
+		Assert.assertNotNull(es.getNombreEmployeJPQL());
+	}
+	
 
 }
