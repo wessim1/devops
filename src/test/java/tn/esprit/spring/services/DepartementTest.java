@@ -20,7 +20,7 @@ public class DepartementTest {
 
 
 	@Test
-	public void testAjouterDepartment() {
+ 	public void testAjouterDepartment() {
 		Departement dep = new Departement("Web");
 		int id = serviceEntreprise.ajouterDepartement(dep);
 		Assert.assertNotNull(serviceEntreprise.getDepartementById(id));
@@ -40,6 +40,17 @@ public class DepartementTest {
 		Assert.assertEquals(WrongValue, -1);
 
 	}
+	@Test
+	public void testgetDepartementById() {
+		Departement dep = new Departement("Info");
+		int id = serviceEntreprise.ajouterDepartement(dep);
+		
+		Departement d1 = serviceEntreprise.getDepartementById(id);
+		Assert.assertNotNull(d1);
+
+		Departement d2 = serviceEntreprise.getDepartementById(213232);
+		Assert.assertNull(d2);
+	};
 
 
 	
