@@ -18,6 +18,7 @@ public class ContratServiceImpl implements IContratService {
 
 	@Autowired
 	ContratRepository contratRepository;
+	public static final Logger l = Logger.getLogger(EntrepriseServiceImpl.class);
 
 
 	public List<Contrat> getAllContrats() {
@@ -31,18 +32,20 @@ public class ContratServiceImpl implements IContratService {
 	}
 	
 	public Contrat updateContrat(Contrat con) {
-		// TODO Auto-generated method stub
+		
 		return contratRepository.save(con);
 	}
 	
 
+	
 	public Contrat retrieveContrat(String id) {
+		l.info("in  retrievecontrat id = " + id);
 		Contrat e =  contratRepository.findById(Integer.parseInt(id)).orElse(null);
+		l.info("contrat returned : " + e);
 		return e; 
 	
 
 	}
-	
 	
 	public void remove(String idContrat)
 	{
