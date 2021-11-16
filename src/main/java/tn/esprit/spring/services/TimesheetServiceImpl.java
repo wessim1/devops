@@ -22,6 +22,7 @@ import tn.esprit.spring.repository.TimesheetRepository;
 @Service
 public class TimesheetServiceImpl implements ITimesheetService {
 
+	public static final Logger l = Logger.getLogger(EntrepriseServiceImpl.class);
 
 	@Autowired
 	MissionRepository missionRepository;
@@ -33,11 +34,17 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	EmployeRepository employeRepository;
 
 	public int ajouterMission(Mission mission) {
+		l.info("START ajoutMission ");
 		try {
+			l.debug(mission.getId());
 			
+			l.trace("debut d'ajout du mission :" + mission.getName());
 			missionRepository.save(mission);
+			l.trace("fin ajout");
 			
+			l.debug("mission " + mission.getName() + " de l'id: " + mission.getId() + " ajoutée avec succée");
 		} catch(Exception e) {
+			l.error("Error : " + e);
 		}
 
 		return mission.getId();
@@ -45,17 +52,23 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	}
 
 	public Mission getMissionById(int missionId) {
+		l.info("Start get mission by Id");
 		try {
+			l.trace("debut getMissionById");
 			Optional<Mission> m = missionRepository.findById(missionId);
+			l.trace("fin getMissionById");
 		return m.isPresent() ? m.get() : null;				
 		} catch(Exception e) {
+			l.error("Error : " + e);
 		}
 		
 		return null;
 	}
 
 	public int affecterMissionADepartement(int missionId, int depId) {
+		l.info("Start affect mission to department");
 		try {
+			l.trace("debut affecterMissionADepartement");
 			Optional<Mission> m = missionRepository.findById(missionId);
 			Optional<Departement> d = departementRepository.findById(depId);
 			Departement departement = new Departement();
@@ -69,9 +82,15 @@ public class TimesheetServiceImpl implements ITimesheetService {
 			}
 			mission.setDepartement(departement);
 			missionRepository.save(mission);
+			if (l.isDebugEnabled())
+			{
+				l.debug(String.format("mission %s ajouté au departement %s", mission.getName(), departement.getName()));
+			}		
+			l.trace("fin affecterMissionADepartement");
 			return mission.getDepartement().getId();
 		}
 		catch(Exception e) {
+			l.error("Error : " + e);
 		}
 		return -1;
 
@@ -89,6 +108,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		timesheet.setValide(false); // par defaut non valide
 		timesheetRepository.save(timesheet);
 
+		l.debug("timesheet ajouté!");
 
 	}
 
@@ -111,6 +131,10 @@ public class TimesheetServiceImpl implements ITimesheetService {
 
 		// verifier s'il est un chef de departement (interet des enum)
 		if (!e.getRole().equals(Role.CHEF_DEPARTEMENT)) {
+			if (l.isDebugEnabled())
+			{
+				l.debug("l'employe doit etre chef de departement pour valider une feuille de temps !");
+			}
 
 			return -1;
 		}
@@ -123,15 +147,23 @@ public class TimesheetServiceImpl implements ITimesheetService {
 			}
 		}
 		if (!chefDeLaMission) {
+			if (l.isDebugEnabled()){
+				l.debug("l'employe doit etre chef de departement de la mission en question");
+			}
 			return 0;
 		}
 		//
 		TimesheetPK timesheetPK = new TimesheetPK(missionId, employeId, dateDebut, dateFin);
 		Timesheet timesheet = timesheetRepository.findBytimesheetPK(timesheetPK);
 		timesheet.setValide(true);
+		l.debug("timesheet validé!");
 
 		// Comment Lire une date de la base de données
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		if (l.isDebugEnabled())
+		{
+			l.debug(String.format("dateDebut : %s",dateFormat.format(timesheet.getTimesheetPK().getDateDebut())));
+		}
 
 
 		return 1;
