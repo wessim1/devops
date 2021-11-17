@@ -78,11 +78,7 @@ pipeline{
 				bat "docker rmi $registry:$BUILD_NUMBER" 
 			}
 		}
-		stage('email'){
-			steps{
-			mail bcc: '', body: 'build_success', cc: '', from: '', replyTo: '', subject: 'jenkins', to: 'nabil.daghbari41@gmail.com'
-			}
-		}
+	
 	}
 
 
